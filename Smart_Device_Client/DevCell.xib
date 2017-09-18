@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="DevCell">
+            <rect key="frame" x="0.0" y="0.0" width="120" height="170"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="120" height="170"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w74-Jl-dhe">
+                        <rect key="frame" x="10" y="10" width="100" height="100"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="圆圈 140x140" translatesAutoresizingMaskIntoConstraints="NO" id="DgD-gN-V7S">
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="窗帘" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JKb-lS-UcV">
+                                <rect key="frame" x="29" y="64" width="42" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="MpB-Zl-PfZ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="窗帘" translatesAutoresizingMaskIntoConstraints="NO" id="SdZ-Ca-6Eo">
+                                <rect key="frame" x="30" y="17" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="C5s-hb-fSW"/>
+                                    <constraint firstAttribute="height" constant="40" id="HeW-NL-XGm"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="DgD-gN-V7S" firstAttribute="leading" secondItem="w74-Jl-dhe" secondAttribute="leading" id="0zM-eP-aQ2"/>
+                            <constraint firstAttribute="trailing" secondItem="DgD-gN-V7S" secondAttribute="trailing" id="AAo-x8-f6f"/>
+                            <constraint firstItem="JKb-lS-UcV" firstAttribute="top" secondItem="SdZ-Ca-6Eo" secondAttribute="bottom" constant="7" id="E75-kp-u5T"/>
+                            <constraint firstItem="DgD-gN-V7S" firstAttribute="top" secondItem="w74-Jl-dhe" secondAttribute="top" id="GVD-KI-m2N"/>
+                            <constraint firstAttribute="bottom" secondItem="DgD-gN-V7S" secondAttribute="bottom" id="N3H-cW-14G"/>
+                            <constraint firstAttribute="width" constant="100" id="NVR-G6-0sX"/>
+                            <constraint firstAttribute="trailing" secondItem="JKb-lS-UcV" secondAttribute="trailing" constant="29" id="OPU-sr-6rb"/>
+                            <constraint firstItem="SdZ-Ca-6Eo" firstAttribute="centerX" secondItem="w74-Jl-dhe" secondAttribute="centerX" id="Y4k-g4-7rp"/>
+                            <constraint firstAttribute="height" constant="100" id="dq4-YM-pnU"/>
+                            <constraint firstItem="JKb-lS-UcV" firstAttribute="leading" secondItem="w74-Jl-dhe" secondAttribute="leading" constant="29" id="uFY-bs-7EL"/>
+                            <constraint firstItem="SdZ-Ca-6Eo" firstAttribute="top" secondItem="w74-Jl-dhe" secondAttribute="top" constant="17" id="uhh-8A-cqe"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="w74-Jl-dhe" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="6op-RH-cpe"/>
+                <constraint firstItem="w74-Jl-dhe" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="Nkb-9f-Na2"/>
+            </constraints>
+            <size key="customSize" width="233" height="213"/>
+            <connections>
+                <outlet property="imgView" destination="SdZ-Ca-6Eo" id="tKN-DF-uwN"/>
+                <outlet property="nameLabel" destination="JKb-lS-UcV" id="p6G-fq-vqV"/>
+            </connections>
+            <point key="canvasLocation" x="10" y="-16"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="圆圈 140x140" width="128" height="128"/>
+        <image name="窗帘" width="64" height="64"/>
+    </resources>
+</document>
