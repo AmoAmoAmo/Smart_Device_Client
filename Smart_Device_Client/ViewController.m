@@ -36,16 +36,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+
     
-//    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-//    UIVisualEffectView *blurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-//    blurView.frame = [[UIScreen mainScreen] bounds];
-//    [self.backgroundImgView addSubview:blurView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUI) name:@"updateHomeUI" object:nil];
     
     [self setCollectionView];
 }
 
-
+//- (void)dealloc
+//{
+//    [super dealloc];
+//}
 
 
 
@@ -54,6 +55,14 @@
     
     AddViewController *vc = [[AddViewController alloc] init];
     [self presentViewController:vc animated:YES completion:nil];
+}
+
+-(void)updateUI
+{
+    self.dataArr = nil;
+    
+    // 重新从沙盒读取数据
+    [self.collection reloadData];
 }
 
 #pragma mark - ****** collection ******
@@ -116,6 +125,7 @@
     }else
     {
         OtherViewController *otherVC = [[OtherViewController alloc] init];
+        otherVC.index = indexPath.row;
         [self presentViewController:otherVC animated:YES completion:nil];
     }
 }

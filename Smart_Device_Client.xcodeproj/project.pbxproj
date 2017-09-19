@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		97BBA909980E5043503FD133 /* libPods-Smart_Device_Client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8321F3AE90932FB089880659 /* libPods-Smart_Device_Client.a */; };
+		C40BB4321F70B13F00BDB1B0 /* HJUDPSearchClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C40BB4311F70B13F00BDB1B0 /* HJUDPSearchClient.m */; };
 		C43D32501F6F6D05009DD3F6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C43D324F1F6F6D05009DD3F6 /* main.m */; };
 		C43D32531F6F6D05009DD3F6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C43D32521F6F6D05009DD3F6 /* AppDelegate.m */; };
 		C43D32561F6F6D05009DD3F6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C43D32551F6F6D05009DD3F6 /* ViewController.m */; };
@@ -28,6 +29,10 @@
 		52871FBFD5E607C024B8844D /* Pods-Smart_Device_Client.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Smart_Device_Client.release.xcconfig"; path = "Pods/Target Support Files/Pods-Smart_Device_Client/Pods-Smart_Device_Client.release.xcconfig"; sourceTree = "<group>"; };
 		800D7E506194256725E30DB2 /* Pods-Smart_Device_Client.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Smart_Device_Client.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Smart_Device_Client/Pods-Smart_Device_Client.debug.xcconfig"; sourceTree = "<group>"; };
 		8321F3AE90932FB089880659 /* libPods-Smart_Device_Client.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Smart_Device_Client.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C40BB4301F70B13F00BDB1B0 /* HJUDPSearchClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HJUDPSearchClient.h; sourceTree = "<group>"; };
+		C40BB4311F70B13F00BDB1B0 /* HJUDPSearchClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HJUDPSearchClient.m; sourceTree = "<group>"; };
+		C40BB4331F70B1B400BDB1B0 /* UnixInterfaceDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UnixInterfaceDefine.h; sourceTree = "<group>"; };
+		C40BB4341F70C17800BDB1B0 /* UDPSearchDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UDPSearchDefine.h; sourceTree = "<group>"; };
 		C43D324B1F6F6D05009DD3F6 /* Smart_Device_Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smart_Device_Client.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C43D324F1F6F6D05009DD3F6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C43D32511F6F6D05009DD3F6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -84,6 +89,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C40BB4351F70D5B000BDB1B0 /* UDP */ = {
+			isa = PBXGroup;
+			children = (
+				C40BB4341F70C17800BDB1B0 /* UDPSearchDefine.h */,
+				C40BB4301F70B13F00BDB1B0 /* HJUDPSearchClient.h */,
+				C40BB4311F70B13F00BDB1B0 /* HJUDPSearchClient.m */,
+			);
+			name = UDP;
+			sourceTree = "<group>";
+		};
 		C43D32421F6F6D05009DD3F6 = {
 			isa = PBXGroup;
 			children = (
@@ -132,6 +147,7 @@
 			children = (
 				C43D32651F6F7F1B009DD3F6 /* AddViewController.h */,
 				C43D32661F6F7F1B009DD3F6 /* AddViewController.m */,
+				C40BB4351F70D5B000BDB1B0 /* UDP */,
 			);
 			name = Add_Device;
 			sourceTree = "<group>";
@@ -161,6 +177,7 @@
 				C44E807C1F7001E00095E21C /* MBProgressHUD+HJ.m */,
 				C44E80661F6FC2B10095E21C /* HeaderDefine.h */,
 				C44E80741F6FD3470095E21C /* DevicesList.plist */,
+				C40BB4331F70B1B400BDB1B0 /* UnixInterfaceDefine.h */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -295,6 +312,7 @@
 			files = (
 				C43D32561F6F6D05009DD3F6 /* ViewController.m in Sources */,
 				C44E807D1F7001E00095E21C /* MBProgressHUD+HJ.m in Sources */,
+				C40BB4321F70B13F00BDB1B0 /* HJUDPSearchClient.m in Sources */,
 				C44E807A1F6FEE590095E21C /* OtherViewController.m in Sources */,
 				C43D326C1F6F80A0009DD3F6 /* BaseViewController.m in Sources */,
 				C43D32531F6F6D05009DD3F6 /* AppDelegate.m in Sources */,
@@ -424,6 +442,7 @@
 			baseConfigurationReference = 800D7E506194256725E30DB2 /* Pods-Smart_Device_Client.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				DEVELOPMENT_TEAM = 229XF58NF5;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
@@ -439,6 +458,7 @@
 			baseConfigurationReference = 52871FBFD5E607C024B8844D /* Pods-Smart_Device_Client.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				DEVELOPMENT_TEAM = 229XF58NF5;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";

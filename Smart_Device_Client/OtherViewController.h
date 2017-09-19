@@ -11,4 +11,6 @@
 
 @interface OtherViewController : BaseViewController
 
+@property (nonatomic, assign) NSUInteger    index;
+
 @end

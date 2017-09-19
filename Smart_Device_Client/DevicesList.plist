@@ -9,6 +9,8 @@
 		<string>窗帘</string>
 		<key>id</key>
 		<string>12346</string>
+		<key>ip</key>
+		<string>192.168.3.11</string>
 	</dict>
 	<dict>
 		<key>type</key>
@@ -17,6 +19,8 @@
 		<string>监控</string>
 		<key>id</key>
 		<string>12345</string>
+		<key>ip</key>
+		<string>192.168.3.19</string>
 	</dict>
 	<dict>
 		<key>type</key>
@@ -25,6 +29,8 @@
 		<string>电灯</string>
 		<key>id</key>
 		<string>12347</string>
+		<key>ip</key>
+		<string>192.168.3.11</string>
 	</dict>
 	<dict>
 		<key>type</key>
@@ -33,6 +39,8 @@
 		<string>空调</string>
 		<key>id</key>
 		<string>12348</string>
+		<key>ip</key>
+		<string>192.168.3.11</string>
 	</dict>
 </array>
 </plist>
