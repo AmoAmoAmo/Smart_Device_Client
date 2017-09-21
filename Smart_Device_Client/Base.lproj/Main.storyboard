@@ -24,30 +24,16 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_3" translatesAutoresizingMaskIntoConstraints="NO" id="3gZ-5K-51T">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vDv-Pn-4GF">
-                                <rect key="frame" x="0.0" y="64" width="375" height="1"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tZI-WB-SMt">
-                                <rect key="frame" x="16" y="24" width="40" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="添加"/>
-                                <connections>
-                                    <action selector="addDevice:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7tE-gz-7s9"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="3gZ-5K-51T" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="7f3-Yr-7Bp"/>
-                            <constraint firstAttribute="trailing" secondItem="3gZ-5K-51T" secondAttribute="trailing" id="GHc-dQ-LME"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="3gZ-5K-51T" secondAttribute="bottom" id="H9g-M6-kLx"/>
-                            <constraint firstItem="3gZ-5K-51T" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ewM-AI-6of"/>
+                            <constraint firstItem="3gZ-5K-51T" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="9Ie-W0-bHB"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="3gZ-5K-51T" secondAttribute="bottom" id="Fab-h3-oRQ"/>
+                            <constraint firstAttribute="trailing" secondItem="3gZ-5K-51T" secondAttribute="trailing" id="o3Z-o6-HZs"/>
+                            <constraint firstItem="3gZ-5K-51T" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="uty-bk-aG7"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="addDevBtn" destination="tZI-WB-SMt" id="eCf-fl-1OR"/>
                         <outlet property="backgroundImgView" destination="3gZ-5K-51T" id="jNA-SO-fQr"/>
                     </connections>
                 </viewController>
@@ -58,6 +44,5 @@
     </scenes>
     <resources>
         <image name="background_3" width="1135" height="2044"/>
-        <image name="添加" width="64" height="64"/>
     </resources>
 </document>

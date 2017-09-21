@@ -20,10 +20,13 @@
 
 
 // 添加设备按钮
-@property (weak, nonatomic) IBOutlet UIButton *addDevBtn;
+@property (nonatomic, strong) UIButton *addDevBtn;
 
 
 @property (nonatomic, strong) UICollectionView *collection;
+
+@property (nonatomic, strong) UIView *viewHead;
+
 // 数据源
 @property (nonatomic, strong) NSArray *dataArr;
 
@@ -43,16 +46,8 @@
     [self setCollectionView];
 }
 
-//- (void)dealloc
-//{
-//    [super dealloc];
-//}
-
-
-
-
-- (IBAction)addDevice:(id)sender {
-    
+-(void)addDevice
+{
     AddViewController *vc = [[AddViewController alloc] init];
     [self presentViewController:vc animated:YES completion:nil];
 }
@@ -70,8 +65,10 @@
 {
     //    collection
     [self.view insertSubview:self.collection atIndex:1];
-    self.collection.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);//重要，整个collection的inset
     [self.collection registerNib:[UINib nibWithNibName:@"DevCell" bundle:nil] forCellWithReuseIdentifier:@"cell"];
+    
+    [self.collection addSubview:self.viewHead];
+    [self.viewHead addSubview:self.addDevBtn];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -121,6 +118,7 @@
     NSDictionary *dic = self.dataArr[indexPath.row];
     if ([dic[@"type"] isEqualToString:@"0"]) {
         CameraViewController *cameraVC = [[CameraViewController alloc] init];
+        cameraVC.index = indexPath.row;
         [self presentViewController:cameraVC animated:YES completion:nil];
     }else
     {
@@ -147,6 +145,32 @@
     return _collection;
 }
 
+-(UIView *)viewHead
+{
+    if (!_viewHead) {
+        _viewHead = [[UIView alloc] initWithFrame:CGRectMake(0, -64, SCREENWIDTH, 64)];
+        _viewHead.backgroundColor = [UIColor clearColor];
+        self.collection.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);//重要，整个collection的inset
+        
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 63, SCREENWIDTH, 1)];
+        lineView.backgroundColor = [UIColor whiteColor];
+        lineView.alpha = 0.4;
+        [_viewHead addSubview:lineView];
+    }
+    return _viewHead;
+}
+
+-(UIButton *)addDevBtn
+{
+    if (!_addDevBtn) {
+        _addDevBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _addDevBtn.frame = CGRectMake(16, 20, 40, 40);
+        [_addDevBtn setImage:[UIImage imageNamed:@"添加"] forState:UIControlStateNormal];
+        [_addDevBtn addTarget:self action:@selector(addDevice) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _addDevBtn;
+}
+
 -(NSArray *)dataArr
 {
     if (!_dataArr) {
@@ -158,7 +182,7 @@
         //获取完整路径
         NSString *documentsPath = [pathArr objectAtIndex:0];
         NSString *path = [documentsPath stringByAppendingPathComponent:@"DevicesList.plist"];
-        //        NSLog(@"1====%@",path);
+//        NSLog(@"1====%@",path);
         
         // 如果沙盒里有MyAddressData.plist该文件的话则直接读文件内容
         NSFileManager *manager = [NSFileManager defaultManager];

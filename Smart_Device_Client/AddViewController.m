@@ -264,7 +264,7 @@
         //            [arr addObject:dic];
         NSUInteger index = arr.count;
         [arr insertObject:dic atIndex:index];
-        NSLog(@"-- arr.count = %ld ", arr.count);
+        NSLog(@"-- arr.count = %ld ", (unsigned long)arr.count);
         [arr writeToFile:path atomically:YES];
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -298,11 +298,12 @@
         // 如果要添加的是摄像头
         if ([nameStr isEqualToString:@"监控"]) {
             // ip地址不能为空
-            printf("--- ip地址不能为空 ---\n");
+            printf("--- ip地址不能为空，默认IP为192.168.3.19 ---\n");
+            ipStr = @"192.168.3.19";
         }
         
         NSInteger index = [self.typeDataArr indexOfObject:nameStr];
-        typeStr = [NSString stringWithFormat:@"%ld",index];
+        typeStr = [NSString stringWithFormat:@"%ld",(long)index];
         idStr = [NSString stringWithFormat:@"%d",arc4random()%99999 ];
     }
     NSDictionary *tempDic = [NSDictionary dictionaryWithObjectsAndKeys:
