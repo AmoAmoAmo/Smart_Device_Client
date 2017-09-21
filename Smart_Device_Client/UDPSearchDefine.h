@@ -35,7 +35,7 @@ static const INT16 CONTROLLCODE_SEARCH_BROADCAST_REPLY      = 1;  // 广播回�
 
 typedef struct searchMsgHeader
 {
-    char            protocolHeader[4];   //协议头  4  // HM_I
+    char            protocolHeader[4];   //协议头  4  // HM_S
     short           controlMask;         //操作码  2
 
 }HJ_SearchMsgHeader;

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		97BBA909980E5043503FD133 /* libPods-Smart_Device_Client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8321F3AE90932FB089880659 /* libPods-Smart_Device_Client.a */; };
 		C40BB4321F70B13F00BDB1B0 /* HJUDPSearchClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C40BB4311F70B13F00BDB1B0 /* HJUDPSearchClient.m */; };
+		C40BB43F1F71640E00BDB1B0 /* HJTCPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C40BB43E1F71640E00BDB1B0 /* HJTCPClient.m */; };
 		C43D32501F6F6D05009DD3F6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C43D324F1F6F6D05009DD3F6 /* main.m */; };
 		C43D32531F6F6D05009DD3F6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C43D32521F6F6D05009DD3F6 /* AppDelegate.m */; };
 		C43D32561F6F6D05009DD3F6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C43D32551F6F6D05009DD3F6 /* ViewController.m */; };
@@ -33,6 +34,9 @@
 		C40BB4311F70B13F00BDB1B0 /* HJUDPSearchClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HJUDPSearchClient.m; sourceTree = "<group>"; };
 		C40BB4331F70B1B400BDB1B0 /* UnixInterfaceDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UnixInterfaceDefine.h; sourceTree = "<group>"; };
 		C40BB4341F70C17800BDB1B0 /* UDPSearchDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UDPSearchDefine.h; sourceTree = "<group>"; };
+		C40BB43D1F71640E00BDB1B0 /* HJTCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HJTCPClient.h; sourceTree = "<group>"; };
+		C40BB43E1F71640E00BDB1B0 /* HJTCPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HJTCPClient.m; sourceTree = "<group>"; };
+		C40BB4401F71643F00BDB1B0 /* TCPSocketDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCPSocketDefine.h; sourceTree = "<group>"; };
 		C43D324B1F6F6D05009DD3F6 /* Smart_Device_Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smart_Device_Client.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C43D324F1F6F6D05009DD3F6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C43D32511F6F6D05009DD3F6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -99,6 +103,16 @@
 			name = UDP;
 			sourceTree = "<group>";
 		};
+		C40BB4411F71644800BDB1B0 /* TCP */ = {
+			isa = PBXGroup;
+			children = (
+				C40BB4401F71643F00BDB1B0 /* TCPSocketDefine.h */,
+				C40BB43D1F71640E00BDB1B0 /* HJTCPClient.h */,
+				C40BB43E1F71640E00BDB1B0 /* HJTCPClient.m */,
+			);
+			name = TCP;
+			sourceTree = "<group>";
+		};
 		C43D32421F6F6D05009DD3F6 = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +173,7 @@
 				C43D32551F6F6D05009DD3F6 /* ViewController.m */,
 				C44E806C1F6FD1300095E21C /* CameraViewController.h */,
 				C44E806D1F6FD1300095E21C /* CameraViewController.m */,
+				C40BB4411F71644800BDB1B0 /* TCP */,
 				C44E80781F6FEE590095E21C /* OtherViewController.h */,
 				C44E80791F6FEE590095E21C /* OtherViewController.m */,
 				C44E80671F6FC3210095E21C /* DevCell.h */,
@@ -311,6 +326,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C43D32561F6F6D05009DD3F6 /* ViewController.m in Sources */,
+				C40BB43F1F71640E00BDB1B0 /* HJTCPClient.m in Sources */,
 				C44E807D1F7001E00095E21C /* MBProgressHUD+HJ.m in Sources */,
 				C40BB4321F70B13F00BDB1B0 /* HJUDPSearchClient.m in Sources */,
 				C44E807A1F6FEE590095E21C /* OtherViewController.m in Sources */,

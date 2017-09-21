@@ -121,6 +121,7 @@
     NSDictionary *dic = self.dataArr[indexPath.row];
     if ([dic[@"type"] isEqualToString:@"0"]) {
         CameraViewController *cameraVC = [[CameraViewController alloc] init];
+        cameraVC.index = indexPath.row;
         [self presentViewController:cameraVC animated:YES completion:nil];
     }else
     {
@@ -158,7 +159,7 @@
         //获取完整路径
         NSString *documentsPath = [pathArr objectAtIndex:0];
         NSString *path = [documentsPath stringByAppendingPathComponent:@"DevicesList.plist"];
-        //        NSLog(@"1====%@",path);
+//        NSLog(@"1====%@",path);
         
         // 如果沙盒里有MyAddressData.plist该文件的话则直接读文件内容
         NSFileManager *manager = [NSFileManager defaultManager];

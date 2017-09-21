@@ -10,4 +10,6 @@
 
 @interface CameraViewController : UIViewController
 
+@property (nonatomic, assign) NSInteger index;  // 用来判断是plist中的哪一个数据
+
 @end

@@ -298,7 +298,8 @@
         // 如果要添加的是摄像头
         if ([nameStr isEqualToString:@"监控"]) {
             // ip地址不能为空
-            printf("--- ip地址不能为空 ---\n");
+            printf("--- ip地址不能为空，默认IP为192.168.3.19 ---\n");
+            ipStr = @"192.168.3.19";
         }
         
         NSInteger index = [self.typeDataArr indexOfObject:nameStr];
