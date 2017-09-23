@@ -9,9 +9,12 @@
 #import "CameraViewController.h"
 #import "HJTCPClient.h"
 #import "MBProgressHUD+HJ.h"
+<<<<<<< HEAD
 #import "HJH264Decoder.h"
 #import "HJOpenGLView.h"
 #import "HeaderDefine.h"
+=======
+>>>>>>> a80b2052e777295d47a5822bf72529f9b09458fc
 
 
 #define PLAYVIEW_PORTRAIT_STARTX    0
@@ -42,6 +45,8 @@
 
 //@property (nonatomic, assign) BOOL isFullScreen;
 
+@property (nonatomic, retain) HJTCPClient *client;
+
 @end
 
 @implementation CameraViewController
@@ -50,22 +55,36 @@
 {
     [super viewWillAppear:animated];
     
+<<<<<<< HEAD
 //    _isFullScreen = false;
     
     // 从沙盒中读取数据
     NSArray *pathArr = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [pathArr objectAtIndex:0];
     NSString *path = [documentsPath stringByAppendingPathComponent:@"DevicesList.plist"];
+=======
+    // 从沙盒中读取数据
+    //获取本地沙盒路径
+    NSArray *pathArr = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    //获取完整路径
+    NSString *documentsPath = [pathArr objectAtIndex:0];
+    NSString *path = [documentsPath stringByAppendingPathComponent:@"DevicesList.plist"];
+    //沙盒文件中的内容（arr）
+>>>>>>> a80b2052e777295d47a5822bf72529f9b09458fc
     NSArray *docArr = [NSArray arrayWithContentsOfFile:path];
     NSDictionary *dic = docArr[self.index];
     
     // ------ TCP -----
     self.client = [[HJTCPClient alloc] init];
+<<<<<<< HEAD
     self.client.delegate = self;
+=======
+>>>>>>> a80b2052e777295d47a5822bf72529f9b09458fc
     [self.client startTCPConnectionWithData:dic];
     
     // HUD
     [self showHUD];
+<<<<<<< HEAD
     
     // 开一个线程去创建计时器，记得要在该子线程中 使用自线程的runloop，否则计时器跑不起来
     [NSThread detachNewThreadSelector:@selector(creatTimer) toTarget:self withObject:nil];
@@ -79,6 +98,8 @@
     // 设置播放器上的按钮UI
     [self buildPlayerUI];
     
+=======
+>>>>>>> a80b2052e777295d47a5822bf72529f9b09458fc
 }
 
 
@@ -101,6 +122,7 @@
 -(void)clickBackBtn
 {
     [self.client stopTCPConnect];
+<<<<<<< HEAD
     [self.decoder stopH264Decode];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -125,6 +147,11 @@
 }
 
 
+=======
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+>>>>>>> a80b2052e777295d47a5822bf72529f9b09458fc
 -(void)showHUD
 {
     [MBProgressHUD showMessage:@"初始化..."];
@@ -137,6 +164,7 @@
     });
 }
 
+<<<<<<< HEAD
 
 -(void)buildPlayerUI
 {
@@ -183,6 +211,8 @@
         [self.playView displayPixelBuffer:pixelBuffer];
     }];
 }
+=======
+>>>>>>> a80b2052e777295d47a5822bf72529f9b09458fc
 
 
 

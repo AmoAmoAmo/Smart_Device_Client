@@ -12,8 +12,11 @@
 		C4066AEF1F74CE5900778FD1 /* HJOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4066AEE1F74CE5900778FD1 /* HJOpenGLView.m */; };
 		C40BB4321F70B13F00BDB1B0 /* HJUDPSearchClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C40BB4311F70B13F00BDB1B0 /* HJUDPSearchClient.m */; };
 		C40BB43F1F71640E00BDB1B0 /* HJTCPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C40BB43E1F71640E00BDB1B0 /* HJTCPClient.m */; };
+<<<<<<< HEAD
 		C42C35FE1F7602EF00E5D21F /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = C42C35FC1F7602EF00E5D21F /* Shader.fsh */; };
 		C42C35FF1F7602EF00E5D21F /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = C42C35FD1F7602EF00E5D21F /* Shader.vsh */; };
+=======
+>>>>>>> a80b2052e777295d47a5822bf72529f9b09458fc
 		C43D32501F6F6D05009DD3F6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C43D324F1F6F6D05009DD3F6 /* main.m */; };
 		C43D32531F6F6D05009DD3F6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C43D32521F6F6D05009DD3F6 /* AppDelegate.m */; };
 		C43D32561F6F6D05009DD3F6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C43D32551F6F6D05009DD3F6 /* ViewController.m */; };
@@ -45,8 +48,11 @@
 		C40BB43D1F71640E00BDB1B0 /* HJTCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HJTCPClient.h; sourceTree = "<group>"; };
 		C40BB43E1F71640E00BDB1B0 /* HJTCPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HJTCPClient.m; sourceTree = "<group>"; };
 		C40BB4401F71643F00BDB1B0 /* TCPSocketDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCPSocketDefine.h; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		C42C35FC1F7602EF00E5D21F /* Shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.fsh; sourceTree = "<group>"; };
 		C42C35FD1F7602EF00E5D21F /* Shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.vsh; sourceTree = "<group>"; };
+=======
+>>>>>>> a80b2052e777295d47a5822bf72529f9b09458fc
 		C43D324B1F6F6D05009DD3F6 /* Smart_Device_Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smart_Device_Client.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C43D324F1F6F6D05009DD3F6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C43D32511F6F6D05009DD3F6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -183,12 +189,15 @@
 				C43D32551F6F6D05009DD3F6 /* ViewController.m */,
 				C44E806C1F6FD1300095E21C /* CameraViewController.h */,
 				C44E806D1F6FD1300095E21C /* CameraViewController.m */,
+<<<<<<< HEAD
 				C4066AEA1F74B70900778FD1 /* HJH264Decoder.h */,
 				C4066AEB1F74B70900778FD1 /* HJH264Decoder.m */,
 				C42C35FC1F7602EF00E5D21F /* Shader.fsh */,
 				C42C35FD1F7602EF00E5D21F /* Shader.vsh */,
 				C4066AED1F74CE5900778FD1 /* HJOpenGLView.h */,
 				C4066AEE1F74CE5900778FD1 /* HJOpenGLView.m */,
+=======
+>>>>>>> a80b2052e777295d47a5822bf72529f9b09458fc
 				C40BB4411F71644800BDB1B0 /* TCP */,
 				C44E80781F6FEE590095E21C /* OtherViewController.h */,
 				C44E80791F6FEE590095E21C /* OtherViewController.m */,

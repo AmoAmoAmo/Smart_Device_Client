@@ -10,11 +10,19 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Smart_Device_Client/HJTCPClient.m"
+<<<<<<< HEAD
             timestampString = "527762036.462807"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "279"
             endingLineNumber = "279"
+=======
+            timestampString = "527655027.57023"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "268"
+            endingLineNumber = "268"
+>>>>>>> a80b2052e777295d47a5822bf72529f9b09458fc
             landmarkName = "-sendDataTransRequest"
             landmarkType = "7">
          </BreakpointContent>

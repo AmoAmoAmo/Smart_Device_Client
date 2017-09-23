@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+<<<<<<< HEAD
 @protocol RecvVideoDataDelegate <NSObject>
 
 -(void)recvVideoData:(char*)videoData andDataLength:(int)length; // 收到视频数据 进行解码
@@ -21,6 +22,10 @@
 
 
 
+=======
+@interface HJTCPClient : NSObject
+
+>>>>>>> a80b2052e777295d47a5822bf72529f9b09458fc
 -(BOOL)startTCPConnectionWithData:(NSDictionary*)dataDic; // 从沙盒中取出的数据
 -(void)stopTCPConnect;
 
