@@ -89,10 +89,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
     }
 }
 
-<<<<<<< HEAD
 // command socket 暂时不初始化
-=======
->>>>>>> a80b2052e777295d47a5822bf72529f9b09458fc
 -(int)initTCPSocket
 {
     m_canRecvData = false;
@@ -171,7 +168,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
 //            ......
 //        }
 //    }
-<<<<<<< HEAD
+
     
     //初始化数据通道Socket2
     int ret = [self initDataSocketConnection];
@@ -194,7 +191,6 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
     }
     
     
-=======
     printf("------- 视频传输 同意连接 连接成功  ---------\n");
     //初始化数据通道Socket2
     [self initDataSocketConnection];
@@ -211,7 +207,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
     [NSThread detachNewThreadSelector:@selector(recvDataThread) toTarget:self withObject:nil];
     //一直接收命令
     [NSThread detachNewThreadSelector:@selector(recvCommandThread) toTarget:self withObject:nil];
->>>>>>> a80b2052e777295d47a5822bf72529f9b09458fc
+
 }
 
 
@@ -244,13 +240,10 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
     
     //2.连接服务器
     int retConn=connect(m_dataSockfd, ( struct sockaddr*)&serveraddr, sizeof( struct sockaddr));
-<<<<<<< HEAD
     if (retConn < 0) {
         perror("-- tcp - Socket - 2 - 连接失败");
         return -1;
     }
-=======
->>>>>>> a80b2052e777295d47a5822bf72529f9b09458fc
     printf("Socket - 2 - Connect Result:%d\n",retConn);
     
     //2.设置阻塞模式
@@ -314,7 +307,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
 {
     while (m_canRecvData) {
         
-<<<<<<< HEAD
+
 //        // 测试代码
 //        char b[11] = {0};
 //        if ([self recvDataSocketData:(char *)b dataLength:11]) {
@@ -324,7 +317,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
 //            }
 //            printf("\n");
 //        }
-=======
+
         // 测试代码
         char b[11] = {0};
         if ([self recvDataSocketData:(char *)b dataLength:11]) {
@@ -334,7 +327,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
             }
             printf("\n");
         }
->>>>>>> a80b2052e777295d47a5822bf72529f9b09458fc
+
         
         
         
@@ -363,16 +356,13 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
                 if([self recvDataSocketData:(char*)&dataContent dataLength:sizeof(dataContent)])
                 {
                     // ---- 来一份数据就向缓冲里追加一份 ----
-<<<<<<< HEAD
+
                     char videoData[204800]={0};// 接收到的视频Buffer.
-=======
-                    char videoData[204800]={0};//接收到的视频Buffer.
->>>>>>> a80b2052e777295d47a5822bf72529f9b09458fc
+
                     int dataLength = dataContent.videoLength;
                     
                     if([self recvDataSocketData:(char*)videoData dataLength:dataLength])
                     {
-<<<<<<< HEAD
 //                        printf("--------- H264视频数据 size = %d ---------\n",dataLength);
 //                        unsigned char * tempData = (unsigned char *)videoData;
 //                        for (int i = 0; i < dataLength; i++) {
@@ -388,16 +378,6 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
                             [_delegate recvVideoData:(unsigned char *)videoData andDataLength:dataLength];
                         }
                         
-                        
-                        
-=======
-                        //接收到视频以后的处理....
-                        //解码.. OpenGL ES渲染
-                        // block回调,代理的方式 更新到GUI.
-                        printf("--------- 视频数据 size = %d ---------\n",dataLength);
-                        
-                        // (char*)videoData , (char*)字符指针，videoData指向这一字符串的起始地址
->>>>>>> a80b2052e777295d47a5822bf72529f9b09458fc
                     }
                 }
                 
