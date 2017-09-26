@@ -35,7 +35,7 @@
 
 @property (nonatomic, strong) NSTimer *timer;
 
-@property (nonatomic, assign)   int  videoLength;
+@property (nonatomic, assign)   int  speedLength;
 
 @property (nonatomic, strong) UIButton *fullBtn;        // 全屏按钮
 
@@ -53,6 +53,7 @@
     
 
 //    _isFullScreen = false;
+    _speedLength = 0;
     
     // 从沙盒中读取数据
     NSArray *pathArr = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -146,7 +147,6 @@
     [self.btnBarView addSubview:self.byteLabel];
     [self.btnBarView addSubview:self.fullBtn];
     
-    
 }
 
 -(void)creatTimer
@@ -158,7 +158,9 @@
 -(void)updateByteLabelText
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        self.byteLabel.text = [NSString stringWithFormat:@"%.1f KB/s",_videoLength / 1024.0];
+        self.byteLabel.text = [NSString stringWithFormat:@"%.1f KB/s",_speedLength / 1024.0];
+        // 清空_videoLength
+//        _speedLength = 0;
     });
 }
 
@@ -167,8 +169,10 @@
 
 -(void)recvVideoData:(char *)videoData andDataLength:(int)length
 {
-    _videoLength = length;
-    
+    // 累加1秒内所有数据包的大小
+//    _speedLength += length;
+    _speedLength = length;
+    printf("----- recved len = %d \n", length);
     
     // 解码
     [self.decoder startH264DecodeWithVideoData:videoData andLength:length andReturnDecodedData:^(CVPixelBufferRef pixelBuffer) {

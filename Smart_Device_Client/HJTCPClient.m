@@ -189,30 +189,12 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
         //一直接收命令
         [NSThread detachNewThreadSelector:@selector(recvCommandThread) toTarget:self withObject:nil];
     }
-    
-    
-    printf("------- 视频传输 同意连接 连接成功  ---------\n");
-    //初始化数据通道Socket2
-    [self initDataSocketConnection];
-    
-    // ====== 请求 音视频数据 传输 数据通道 ======
-    [self sendDataTransRequest];
-    
-    printf("------- 数据 准备就绪 ---------\n");
-    m_canRecvData = true;
-    m_canRecvCommand = true;
-    
-    // 新开线程，在线程里一直在循环接收数据/命令，直到循环的开关(m_canRecvData)被关闭(-stopTCPConnect;)
-    //一直接收数据（视频or音频）
-    [NSThread detachNewThreadSelector:@selector(recvDataThread) toTarget:self withObject:nil];
-    //一直接收命令
-    [NSThread detachNewThreadSelector:@selector(recvCommandThread) toTarget:self withObject:nil];
 
 }
 
 
 
-// 初始化数据通道Socket2
+// 初始化数据通道Socket
 - (int)initDataSocketConnection
 {
     m_dataSockfd = socket(AF_INET,SOCK_STREAM,0);
@@ -246,7 +228,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
     }
     printf("Socket - 2 - Connect Result:%d\n",retConn);
     
-    //2.设置阻塞模式
+    // 设置阻塞模式
     int flags1 = fcntl(m_dataSockfd, F_GETFL, 0);
     fcntl(m_dataSockfd, F_SETFL, flags1 &( ~O_NONBLOCK));
     
@@ -306,31 +288,6 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
 -(void)recvDataThread
 {
     while (m_canRecvData) {
-        
-
-//        // 测试代码
-//        char b[11] = {0};
-//        if ([self recvDataSocketData:(char *)b dataLength:11]) {
-//            printf("---- \n");
-//            for (int i = 0; i < 11; i++) {
-//                printf("%02x", b[i]);
-//            }
-//            printf("\n");
-//        }
-
-        // 测试代码
-        char b[11] = {0};
-        if ([self recvDataSocketData:(char *)b dataLength:11]) {
-            printf("---- \n");
-            for (int i = 0; i < 11; i++) {
-                printf("%02x", b[i]);
-            }
-            printf("\n");
-        }
-
-        
-        
-        
         
         // 不知道是什么类型的数据
         HJ_MsgHeader msgHeader;
@@ -561,7 +518,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
         recvLen+=nRet;
         pBuf+=nRet;
         
-        printf("接收了%d个字节\n",recvLen);
+        printf("\n接收了%d个字节\n",recvLen);
 //        // 打印结构体
 //        char *tempBuf = (char *)malloc(aLength);
 //        memcpy(tempBuf, pBuf, aLength);

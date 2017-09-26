@@ -14,11 +14,11 @@
 	</dict>
 	<dict>
 		<key>type</key>
-		<string>0</string>
+		<string>4</string>
 		<key>name</key>
-		<string>监控</string>
+		<string>插座</string>
 		<key>id</key>
-		<string>12345</string>
+		<string>12349</string>
 		<key>ip</key>
 		<string>192.168.3.19</string>
 	</dict>

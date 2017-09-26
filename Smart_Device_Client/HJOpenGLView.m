@@ -63,9 +63,7 @@ const GLfloat kColorConversion601FullRange[] = {
 	// 像素尺寸 of the CAEAGLLayer.
 	GLint           _backingWidth;
 	GLint           _backingHeight;
-    // 记录小屏时 CAEAGLLayer的像素尺寸
-    GLint           _smallWidth;
-    GLint           _smallHeight;
+
 
 	EAGLContext                 *_context;  // 绘制句柄或者上下文
 	CVOpenGLESTextureRef        _lumaTexture;
@@ -138,27 +136,6 @@ const GLfloat kColorConversion601FullRange[] = {
 
 
 
-//#pragma mark - 通知中心
-//-(void)addNotification
-//{
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didClickFullButton) name:@"didClickFullButton" object:nil];
-//}
-//
-//-(void)didClickFullButton
-//{
-//    NSLog(@"----- didClickFullButton -------");
-//    
-//    if (!_isFullScreen) {   // 即将进入全屏状态
-//        _backingWidth = (GLint)(SCREENWIDTH * 2);
-//        _backingHeight = SCREENHEIGHT * 2;
-//    }else{                  // 即将退出全屏状态
-//        _backingWidth = _smallWidth;
-//        _backingHeight = _smallHeight;
-//    }
-//    
-//    
-//    _isFullScreen = !_isFullScreen;
-//}
 
 
 # pragma mark - OpenGL setup
@@ -212,9 +189,7 @@ const GLfloat kColorConversion601FullRange[] = {
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &_backingWidth);   // 获取绘制缓冲区的像素宽度
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &_backingHeight); // ...
 
-    // 记录小屏时 CAEAGLLayer的像素尺寸
-    _smallWidth = _backingWidth;
-    _smallHeight = _backingHeight;
+    
     
     // 绑定绘制缓冲区到帧缓冲区
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _colorBufferHandle);
@@ -345,7 +320,7 @@ const GLfloat kColorConversion601FullRange[] = {
                 _backingWidth  = 750,
                 _backingHeight = 1334
          */
-//        printf("******* 绘制缓冲区的屏幕分辨率: width = %d, height = %d\n", _backingWidth, _backingHeight);
+        printf("******* 绘制缓冲区的屏幕分辨率: width = %d, height = %d\n", _backingWidth, _backingHeight);
 		glViewport(0, 0, _backingWidth, _backingHeight);
 	}
 	
