@@ -10,20 +10,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Smart_Device_Client/HJTCPClient.m"
-<<<<<<< HEAD
-            timestampString = "527762036.462807"
+            timestampString = "528199985.238926"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "279"
-            endingLineNumber = "279"
-=======
-            timestampString = "527655027.57023"
+            startingLineNumber = "320"
+            endingLineNumber = "320"
+            landmarkName = "-recvDataThread"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Smart_Device_Client/HJTCPClient.m"
+            timestampString = "528199989.012131"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "268"
-            endingLineNumber = "268"
->>>>>>> a80b2052e777295d47a5822bf72529f9b09458fc
-            landmarkName = "-sendDataTransRequest"
+            startingLineNumber = "322"
+            endingLineNumber = "322"
+            landmarkName = "-recvDataThread"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Smart_Device_Client/HJTCPClient.m"
+            timestampString = "528201043.790297"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "503"
+            endingLineNumber = "503"
+            landmarkName = "-recvDataSocketData:dataLength:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

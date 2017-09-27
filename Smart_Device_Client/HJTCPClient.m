@@ -187,7 +187,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
         //一直接收数据（视频or音频）
         [NSThread detachNewThreadSelector:@selector(recvDataThread) toTarget:self withObject:nil];
         //一直接收命令
-        [NSThread detachNewThreadSelector:@selector(recvCommandThread) toTarget:self withObject:nil];
+//        [NSThread detachNewThreadSelector:@selector(recvCommandThread) toTarget:self withObject:nil];
     }
 
 }
@@ -317,15 +317,10 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
                     char videoData[204800]={0};// 接收到的视频Buffer.
 
                     int dataLength = dataContent.videoLength;
+                    printf("struct video len = %d\n",dataLength);
                     
                     if([self recvDataSocketData:(char*)videoData dataLength:dataLength])
                     {
-//                        printf("--------- H264视频数据 size = %d ---------\n",dataLength);
-//                        unsigned char * tempData = (unsigned char *)videoData;
-//                        for (int i = 0; i < dataLength; i++) {
-//                            printf("%02x", tempData[i]);
-//                        }
-//                        printf("\n");
                         
                         // 接收到视频,
                         //解码 ---> OpenGL ES渲染
@@ -518,14 +513,8 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
         recvLen+=nRet;
         pBuf+=nRet;
         
-        printf("\n接收了%d个字节\n",recvLen);
-//        // 打印结构体
-//        char *tempBuf = (char *)malloc(aLength);
-//        memcpy(tempBuf, pBuf, aLength);
-//        for (int i = 0; i < aLength; i++) {
-//            printf("%02x", tempBuf[i]);
-//        }
-//        printf("\n");
+        printf("\n接收了%d个字节,\n",recvLen);
+
     }
     
     pthread_mutex_unlock(&mutex_dRecv);

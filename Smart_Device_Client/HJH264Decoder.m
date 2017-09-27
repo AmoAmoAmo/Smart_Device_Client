@@ -106,11 +106,6 @@
             self.returnDataBlock(pixelBuffer);
             CVPixelBufferRelease(pixelBuffer);
             
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                // -------- 显示解码的结果(OpenGL ES类进行解析渲染) ---------
-////                [self.playerView displayPixelBuffer:pixelBuffer];
-//                CVPixelBufferRelease(pixelBuffer);
-//            });
         }
         NSLog(@"Read Nalu size %ld", packetSize);
         
