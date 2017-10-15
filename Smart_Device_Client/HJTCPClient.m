@@ -293,6 +293,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
         HJ_MsgHeader msgHeader;
         memset(&msgHeader, 0, sizeof(msgHeader));
         // 读包头
+        printf("---- sizeof(msgHeader) = %d\n", (int)sizeof(msgHeader));
         if (![self recvDataSocketData:(char *)&msgHeader dataLength:sizeof(msgHeader)])
         {
             return;
@@ -309,7 +310,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
             {
                 HJ_VideoDataContent dataContent;
                 memset(&dataContent, 0, sizeof(dataContent));
-                
+                printf("----- sizeof(dataContent) = %d\n",(int)sizeof(dataContent));
                 if([self recvDataSocketData:(char*)&dataContent dataLength:sizeof(dataContent)])
                 {
                     // ---- 来一份数据就向缓冲里追加一份 ----
@@ -317,7 +318,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
                     char videoData[204800]={0};// 接收到的视频Buffer.
 
                     int dataLength = dataContent.videoLength;
-                    printf("struct video len = %d\n",dataLength);
+                    printf("------ struct video len = %d\n",dataLength);
                     
                     if([self recvDataSocketData:(char*)videoData dataLength:dataLength])
                     {
@@ -335,28 +336,28 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
                 
             }
             
-            // 音频数据
-            else if(msgHeader.controlMask==CONTROLLCODE_AUDIOTRANS_REPLY)
-            {
-                HJ_AudioDataContent dataContent;
-                memset(&dataContent, 0, sizeof(dataContent));
-                
-                if([self recvDataSocketData:(char*)&dataContent dataLength:sizeof(dataContent)])
-                {
-                    char audioData[1280];//音频数据Buffer
-                    memset(&audioData, 0, sizeof(audioData));
-                    
-                    int audioLength=dataContent.dataLength;
-                    
-                    if([self recvDataSocketData:audioData dataLength:audioLength])
-                    {
-                        //接收到音频以后的处理
-                        //解码音频 pcm
-                        //调用ios 音频播放接口播放pcm  OpenAL 播放音频。
-                        printf("++++++++++++ 音频 size = %d +++++++++++++\n",audioLength);
-                    }
-                }
-            }
+//            // 音频数据
+//            else if(msgHeader.controlMask==CONTROLLCODE_AUDIOTRANS_REPLY)
+//            {
+//                HJ_AudioDataContent dataContent;
+//                memset(&dataContent, 0, sizeof(dataContent));
+//                printf("------ audio sizeof(dataContent) = %d \n",(int)sizeof(dataContent));
+//                if([self recvDataSocketData:(char*)&dataContent dataLength:sizeof(dataContent)])
+//                {
+//                    char audioData[1280];//音频数据Buffer
+//                    memset(&audioData, 0, sizeof(audioData));
+//                    
+//                    int audioLength=dataContent.dataLength;
+//                    printf("---- audio audioLength = %d \n", audioLength);
+//                    if([self recvDataSocketData:audioData dataLength:audioLength])
+//                    {
+//                        //接收到音频以后的处理
+//                        //解码音频 pcm
+//                        //调用ios 音频播放接口播放pcm  OpenAL 播放音频。
+//                        printf("++++++++++++ 音频 size = %d +++++++++++++\n",audioLength);
+//                    }
+//                }
+//            }
         }
     }
 }
@@ -499,7 +500,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
     
     int recvLen=0;
     long nRet=0;
-    
+    printf("------ aLength = %d -------\n", aLength);
     while(recvLen<aLength)
     {
         nRet=recv(m_dataSockfd,pBuf,aLength-recvLen,0);
@@ -513,7 +514,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
         recvLen+=nRet;
         pBuf+=nRet;
         
-        printf("\n接收了%d个字节,\n",recvLen);
+        printf("接收了%d个字节,\n\n",recvLen);
 
     }
     

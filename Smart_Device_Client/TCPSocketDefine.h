@@ -80,7 +80,6 @@ typedef struct videoDataContent
 typedef struct audioDataContent
 {
     unsigned int        timeStamp;          // 时间戳
-    unsigned int        packageNum;         // 包序号
     unsigned int        collectTime;        // 采集时间
     char                audioFormat;        // 音频格式
     unsigned int        dataLength;         // 数据长度

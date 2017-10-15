@@ -123,17 +123,23 @@
 
 -(void)buildSearchedUI
 {
+    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+//    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+    
+    
     CGFloat marginY = 50;
 //    CGFloat marginX = 70;
     
-    CGFloat labelX = 50;
+    CGFloat labelX = 30;
     CGFloat labelY = 100;
     CGFloat labelW = 80;
     CGFloat labelH = 30;
     
-    CGFloat textX = labelX+labelW + 40;
-    CGFloat textW = 160;
+    
+    CGFloat textX = labelX+labelW + 20;
+    CGFloat textW = screenWidth - textX - 20;
     CGFloat textH = 40;
+    
     
     
     UILabel *typeL = [[UILabel alloc] initWithFrame:CGRectMake(labelX, labelY, labelW, labelH)];

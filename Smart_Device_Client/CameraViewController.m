@@ -160,7 +160,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         self.byteLabel.text = [NSString stringWithFormat:@"%.1f KB/s",_speedLength / 1024.0];
         // 清空_videoLength
-//        _speedLength = 0;
+        _speedLength = 0;
     });
 }
 
@@ -170,8 +170,8 @@
 -(void)recvVideoData:(char *)videoData andDataLength:(int)length
 {
     // 累加1秒内所有数据包的大小
-//    _speedLength += length;
-    _speedLength = length;
+    _speedLength += length;
+//    _speedLength = length;
     printf("----- recved len = %d \n", length);
     
     // 解码
