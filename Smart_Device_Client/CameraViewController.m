@@ -12,7 +12,7 @@
 #import "HJH264Decoder.h"
 #import "HJOpenGLView.h"
 #import "HeaderDefine.h"
-
+#import "AACPlayer.h"
 
 
 #define PLAYVIEW_PORTRAIT_STARTX    0
@@ -21,9 +21,10 @@
 #define PLAYVIEW_PORTRAIT_HEIGHT    SCREENWIDTH * (480 / 640.0)
 
 //#define PLAYVIEW_LANDSCAPE_STARTX    0
+#define BTN_MARGIN                  10      // 按钮之间的间隔
+#define BTN_WIDTH                   40      // 按钮宽度
 
-
-@interface CameraViewController ()<RecvVideoDataDelegate>
+@interface CameraViewController ()<RecvDataDelegate>
 
 @property (nonatomic, retain) HJTCPClient *client;
 
@@ -39,9 +40,16 @@
 
 @property (nonatomic, strong) UIButton *fullBtn;        // 全屏按钮
 
+@property (nonatomic, strong) UIButton *audioBtn;       // 音频播放/暂停 按钮
+
+@property (nonatomic, strong) UIButton *videoBtn;       // 视频播放/暂停 按钮
+
+@property (nonatomic, assign) BOOL  videoIsStop;        // 记录 视频是否在暂停的状态
+
 @property (nonatomic, strong) UIView *btnBarView;
 
-//@property (nonatomic, assign) BOOL isFullScreen;
+@property (nonatomic, strong) AACPlayer *aacPlayer;
+
 
 @end
 
@@ -51,9 +59,9 @@
 {
     [super viewWillAppear:animated];
     
-
-//    _isFullScreen = false;
+    self.aacPlayer = [[AACPlayer alloc] init];
     _speedLength = 0;
+    self.videoIsStop = false;
     
     // 从沙盒中读取数据
     NSArray *pathArr = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -125,7 +133,39 @@
         [self.btnBarView setFrame:CGRectMake(0, 64, SCREENWIDTH, 50)];
         
     }
+    // btnBarView 的子视图要重设frame
+    self.fullBtn.frame = CGRectMake(SCREENWIDTH - BTN_WIDTH - BTN_MARGIN, 5, BTN_WIDTH, BTN_WIDTH);
+    self.audioBtn.frame = CGRectMake(SCREENWIDTH - (BTN_WIDTH + BTN_MARGIN)*2, 5, BTN_WIDTH, BTN_WIDTH);
+    self.videoBtn.frame = CGRectMake(SCREENWIDTH - (BTN_WIDTH + BTN_MARGIN)*3, 5, BTN_WIDTH, BTN_WIDTH);
 }
+
+-(void)clickAudioBtn
+{
+    self.audioBtn.selected = !self.audioBtn.selected;
+    if (self.audioBtn.selected) {
+        // 静音
+        [self.aacPlayer audioPause];
+    }else{
+        // 非静音
+        [self.aacPlayer audioStart];
+    }
+    
+}
+
+-(void)clickVideoBtn
+{
+    self.videoBtn.selected = !self.videoBtn.selected;
+    // 视频的暂停与播放，根据是否向displayPixelBuffer里传数据
+    if (self.videoBtn.selected) {
+        // 暂停
+        self.videoIsStop = true;
+    }else{
+        // 播放
+        self.videoIsStop = false;
+    }
+}
+
+
 
 
 -(void)showHUD
@@ -146,7 +186,8 @@
     [self.view addSubview:self.btnBarView];
     [self.btnBarView addSubview:self.byteLabel];
     [self.btnBarView addSubview:self.fullBtn];
-    
+    [self.btnBarView addSubview:self.audioBtn];
+    [self.btnBarView addSubview:self.videoBtn];
 }
 
 -(void)creatTimer
@@ -165,9 +206,9 @@
 }
 
 
-#pragma mark - RecvVideoDataDelegate - 收到H264视频数据 并进行解码
+#pragma mark - RecvDataDelegate - 收到H264视频数据 并进行解码
 
--(void)recvVideoData:(char *)videoData andDataLength:(int)length
+-(void)recvVideoData:(unsigned char *)videoData andDataLength:(int)length
 {
     // 累加1秒内所有数据包的大小
     _speedLength += length;
@@ -175,20 +216,30 @@
     printf("----- recved len = %d \n", length);
     
     // 解码
-    [self.decoder startH264DecodeWithVideoData:videoData andLength:length andReturnDecodedData:^(CVPixelBufferRef pixelBuffer) {
-        
-        //
-//        printf("-------- 解码后的数据： --------\n");
-//        unsigned char * tempData = (unsigned char *)videoData;
-//        for (int i = 0; i < length; i++) {
-//            printf("%02x", tempData[i]);
-//        }
-//        printf("\n");
+    [self.decoder startH264DecodeWithVideoData:(char *)videoData andLength:length andReturnDecodedData:^(CVPixelBufferRef pixelBuffer) {
         
        // OpenGL渲染
-        [self.playView displayPixelBuffer:pixelBuffer];
+        if (!self.videoIsStop) {
+            [self.playView displayPixelBuffer:pixelBuffer];
+        }
     }];
 }
+
+-(void)recvAudioData:(unsigned char *)audioData andDataLength:(int)length
+{
+    // 开始播放音频
+    [self.aacPlayer playAudioWithData:(char *)audioData andLength:length];
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -225,7 +276,7 @@
 {
     if (!_fullBtn) {
         _fullBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _fullBtn.frame = CGRectMake(SCREENWIDTH - 40 - 10, 5, 40, 40);
+        _fullBtn.frame = CGRectMake(SCREENWIDTH - BTN_WIDTH - BTN_MARGIN, 5, BTN_WIDTH, BTN_WIDTH);
         [_fullBtn setImage:[UIImage imageNamed:@"全屏"] forState:UIControlStateNormal];
         [self.fullBtn setImage:[UIImage imageNamed:@"退出全屏"] forState:UIControlStateSelected];
         [_fullBtn addTarget:self action:@selector(clickFullBtn) forControlEvents:UIControlEventTouchUpInside];
@@ -243,4 +294,36 @@
     return _btnBarView;
 }
 
+-(UIButton *)audioBtn
+{
+    if (!_audioBtn) {
+        _audioBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _audioBtn.frame = CGRectMake(SCREENWIDTH - (BTN_WIDTH + BTN_MARGIN)*2, 5, BTN_WIDTH, BTN_WIDTH);
+        [_audioBtn setImage:[UIImage imageNamed:@"非静音"] forState:UIControlStateNormal];
+        [_audioBtn setImage:[UIImage imageNamed:@"静音"] forState:UIControlStateSelected];
+        [_audioBtn addTarget:self action:@selector(clickAudioBtn) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _audioBtn;
+}
+
+-(UIButton *)videoBtn
+{
+    if (!_videoBtn) {
+        _videoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _videoBtn.frame = CGRectMake(SCREENWIDTH - (BTN_WIDTH + BTN_MARGIN)*3, 5, BTN_WIDTH, BTN_WIDTH);
+        [_videoBtn setImage:[UIImage imageNamed:@"暂停"] forState:UIControlStateNormal];
+        [_videoBtn setImage:[UIImage imageNamed:@"播放"] forState:UIControlStateSelected];
+        [_videoBtn addTarget:self action:@selector(clickVideoBtn) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _videoBtn;
+}
+
+
 @end
+
+
+
+
+
+
+

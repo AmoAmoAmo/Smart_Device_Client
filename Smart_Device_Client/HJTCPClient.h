@@ -9,16 +9,19 @@
 #import <Foundation/Foundation.h>
 
 
-@protocol RecvVideoDataDelegate <NSObject>
+@protocol RecvDataDelegate <NSObject>
 
--(void)recvVideoData:(char*)videoData andDataLength:(int)length; // 收到视频数据 进行解码
+-(void)recvVideoData:(unsigned char*)videoData andDataLength:(int)length; // 收到视频数据 进行解码
+-(void)recvAudioData:(unsigned char *)audioData andDataLength:(int)length;
 
 @end
 
 
+
+
 @interface HJTCPClient : NSObject
 
-@property (nonatomic, assign) id<RecvVideoDataDelegate> delegate;
+@property (nonatomic, assign) id<RecvDataDelegate> delegate;
 
 
 

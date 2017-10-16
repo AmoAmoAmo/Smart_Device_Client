@@ -164,13 +164,13 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
 //        // 传输请求响应
 //        if ([self recvVideoTransReply]) {
 //            printf("------- 视频传输 同意连接 连接成功  ---------\n");
-//            //初始化数据通道Socket2
+//            //初始化数据通道Socket
 //            ......
 //        }
 //    }
 
     
-    //初始化数据通道Socket2
+    //初始化数据通道Socket
     int ret = [self initDataSocketConnection];
     
     if (ret == 0) {
@@ -223,10 +223,10 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
     //2.连接服务器
     int retConn=connect(m_dataSockfd, ( struct sockaddr*)&serveraddr, sizeof( struct sockaddr));
     if (retConn < 0) {
-        perror("-- tcp - Socket - 2 - 连接失败");
+        perror("-- tcp - Socket -  - 连接失败");
         return -1;
     }
-    printf("Socket - 2 - Connect Result:%d\n",retConn);
+    printf("Socket -  - Connect Result:%d\n",retConn);
     
     // 设置阻塞模式
     int flags1 = fcntl(m_dataSockfd, F_GETFL, 0);
@@ -336,28 +336,30 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
                 
             }
             
-//            // 音频数据
-//            else if(msgHeader.controlMask==CONTROLLCODE_AUDIOTRANS_REPLY)
-//            {
-//                HJ_AudioDataContent dataContent;
-//                memset(&dataContent, 0, sizeof(dataContent));
-//                printf("------ audio sizeof(dataContent) = %d \n",(int)sizeof(dataContent));
-//                if([self recvDataSocketData:(char*)&dataContent dataLength:sizeof(dataContent)])
-//                {
-//                    char audioData[1280];//音频数据Buffer
-//                    memset(&audioData, 0, sizeof(audioData));
-//                    
-//                    int audioLength=dataContent.dataLength;
-//                    printf("---- audio audioLength = %d \n", audioLength);
-//                    if([self recvDataSocketData:audioData dataLength:audioLength])
-//                    {
-//                        //接收到音频以后的处理
-//                        //解码音频 pcm
-//                        //调用ios 音频播放接口播放pcm  OpenAL 播放音频。
-//                        printf("++++++++++++ 音频 size = %d +++++++++++++\n",audioLength);
-//                    }
-//                }
-//            }
+            // 音频数据
+            else if(msgHeader.controlMask==CONTROLLCODE_AUDIOTRANS_REPLY)
+            {
+                HJ_AudioDataContent dataContent;
+                memset(&dataContent, 0, sizeof(dataContent));
+                printf("------ audio sizeof(dataContent) = %d \n",(int)sizeof(dataContent));
+                if([self recvDataSocketData:(char*)&dataContent dataLength:sizeof(dataContent)])
+                {
+                    char audioData[1280];//音频数据Buffer
+                    memset(&audioData, 0, sizeof(audioData));
+                    
+                    int audioLength=dataContent.dataLength;
+                    printf("---- audio audioLength = %d \n", audioLength);
+                    if([self recvDataSocketData:audioData dataLength:audioLength])
+                    {
+                        //接收到音频以后的处理
+                        if ([_delegate respondsToSelector:@selector(recvAudioData:andDataLength:)]) {
+                            [_delegate recvAudioData:(unsigned char *)audioData andDataLength:audioLength];
+                        }
+                        
+                        
+                    }
+                }
+            }
         }
     }
 }

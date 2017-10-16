@@ -28,6 +28,7 @@
 		C44E80751F6FD3470095E21C /* DevicesList.plist in Resources */ = {isa = PBXBuildFile; fileRef = C44E80741F6FD3470095E21C /* DevicesList.plist */; };
 		C44E807A1F6FEE590095E21C /* OtherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C44E80791F6FEE590095E21C /* OtherViewController.m */; };
 		C44E807D1F7001E00095E21C /* MBProgressHUD+HJ.m in Sources */ = {isa = PBXBuildFile; fileRef = C44E807C1F7001E00095E21C /* MBProgressHUD+HJ.m */; };
+		C4B4A8381F94F1800015A00B /* AACPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4B4A8371F94F1800015A00B /* AACPlayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +73,8 @@
 		C44E80791F6FEE590095E21C /* OtherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherViewController.m; sourceTree = "<group>"; };
 		C44E807B1F7001E00095E21C /* MBProgressHUD+HJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+HJ.h"; sourceTree = "<group>"; };
 		C44E807C1F7001E00095E21C /* MBProgressHUD+HJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+HJ.m"; sourceTree = "<group>"; };
+		C4B4A8361F94F1800015A00B /* AACPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AACPlayer.h; sourceTree = "<group>"; };
+		C4B4A8371F94F1800015A00B /* AACPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AACPlayer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +192,8 @@
 				C42C35FD1F7602EF00E5D21F /* Shader.vsh */,
 				C4066AED1F74CE5900778FD1 /* HJOpenGLView.h */,
 				C4066AEE1F74CE5900778FD1 /* HJOpenGLView.m */,
+				C4B4A8361F94F1800015A00B /* AACPlayer.h */,
+				C4B4A8371F94F1800015A00B /* AACPlayer.m */,
 				C40BB4411F71644800BDB1B0 /* TCP */,
 				C44E80781F6FEE590095E21C /* OtherViewController.h */,
 				C44E80791F6FEE590095E21C /* OtherViewController.m */,
@@ -353,6 +358,7 @@
 				C43D32531F6F6D05009DD3F6 /* AppDelegate.m in Sources */,
 				C43D32671F6F7F1B009DD3F6 /* AddViewController.m in Sources */,
 				C43D32501F6F6D05009DD3F6 /* main.m in Sources */,
+				C4B4A8381F94F1800015A00B /* AACPlayer.m in Sources */,
 				C44E806E1F6FD1300095E21C /* CameraViewController.m in Sources */,
 				C4066AEC1F74B70900778FD1 /* HJH264Decoder.m in Sources */,
 				C44E806A1F6FC3210095E21C /* DevCell.m in Sources */,
