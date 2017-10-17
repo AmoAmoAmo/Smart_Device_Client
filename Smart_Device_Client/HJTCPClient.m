@@ -293,7 +293,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
         HJ_MsgHeader msgHeader;
         memset(&msgHeader, 0, sizeof(msgHeader));
         // 读包头
-        printf("---- sizeof(msgHeader) = %d\n", (int)sizeof(msgHeader));
+//        printf("---- sizeof(msgHeader) = %d\n", (int)sizeof(msgHeader));
         if (![self recvDataSocketData:(char *)&msgHeader dataLength:sizeof(msgHeader)])
         {
             return;
@@ -310,7 +310,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
             {
                 HJ_VideoDataContent dataContent;
                 memset(&dataContent, 0, sizeof(dataContent));
-                printf("----- sizeof(dataContent) = %d\n",(int)sizeof(dataContent));
+//                printf("----- sizeof(dataContent) = %d\n",(int)sizeof(dataContent));
                 if([self recvDataSocketData:(char*)&dataContent dataLength:sizeof(dataContent)])
                 {
                     // ---- 来一份数据就向缓冲里追加一份 ----
@@ -341,7 +341,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
             {
                 HJ_AudioDataContent dataContent;
                 memset(&dataContent, 0, sizeof(dataContent));
-                printf("------ audio sizeof(dataContent) = %d \n",(int)sizeof(dataContent));
+//                printf("------ audio sizeof(dataContent) = %d \n",(int)sizeof(dataContent));
                 if([self recvDataSocketData:(char*)&dataContent dataLength:sizeof(dataContent)])
                 {
                     char audioData[1280];//音频数据Buffer
