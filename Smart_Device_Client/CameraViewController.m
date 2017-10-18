@@ -144,10 +144,12 @@
     self.audioBtn.selected = !self.audioBtn.selected;
     if (self.audioBtn.selected) {
         // 静音
+        printf("-------- 静音 -----\n");
         [self.aacPlayer audioPause];
     }else{
         // 非静音
-        [self.aacPlayer audioStart];
+        printf("-------- 播放 -----\n");
+//        [self.aacPlayer audioStart];
     }
     
 }
@@ -213,7 +215,7 @@
     // 累加1秒内所有数据包的大小
     _speedLength += length;
 //    _speedLength = length;
-    printf("----- recved len = %d \n", length);
+//    printf("----- recved len = %d \n", length);
     
     // 解码
     [self.decoder startH264DecodeWithVideoData:(char *)videoData andLength:length andReturnDecodedData:^(CVPixelBufferRef pixelBuffer) {
@@ -227,8 +229,12 @@
 
 -(void)recvAudioData:(unsigned char *)audioData andDataLength:(int)length
 {
-    // 开始播放音频
-    [self.aacPlayer playAudioWithData:(char *)audioData andLength:length];
+    // 开始播放音频 (必须在主线程刷新)
+    if (!self.audioBtn.selected) {
+        printf("***********************\n");
+        [self.aacPlayer playAudioWithData:(char *)audioData andLength:length];
+    }
+    
 }
 
 
@@ -302,6 +308,8 @@
         [_audioBtn setImage:[UIImage imageNamed:@"非静音"] forState:UIControlStateNormal];
         [_audioBtn setImage:[UIImage imageNamed:@"静音"] forState:UIControlStateSelected];
         [_audioBtn addTarget:self action:@selector(clickAudioBtn) forControlEvents:UIControlEventTouchUpInside];
+        // 开始为静音的状态
+        _audioBtn.selected = true;
     }
     return _audioBtn;
 }

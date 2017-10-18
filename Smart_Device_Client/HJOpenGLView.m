@@ -320,7 +320,7 @@ const GLfloat kColorConversion601FullRange[] = {
                 _backingWidth  = 750,
                 _backingHeight = 1334
          */
-        printf("******* 绘制缓冲区的屏幕分辨率: width = %d, height = %d\n", _backingWidth, _backingHeight);
+//        printf("******* 绘制缓冲区的屏幕分辨率: width = %d, height = %d\n", _backingWidth, _backingHeight);
 		glViewport(0, 0, _backingWidth, _backingHeight);
 	}
 	

@@ -203,7 +203,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
         printf("socket error! \n");
         return -1;
     }
-    printf("--- %d \n",m_dataSockfd);
+    printf("--- socketfd = %d \n",m_dataSockfd);
     
     // 设置要连接的对方的IP地址和端口等属性；
     const char *ipString = [m_ipStr UTF8String]; // NSString 转化为 char *
@@ -315,12 +315,16 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
                 {
                     // ---- 来一份数据就向缓冲里追加一份 ----
 
-                    char videoData[204800]={0};// 接收到的视频Buffer.
+//                    char videoData[204800]={0};// 接收到的视频Buffer.
+                    
+                    const size_t kRecvBufSize = 204800;
+                    char* buf = (char*)malloc(kRecvBufSize * sizeof(char));
+                    
 
                     int dataLength = dataContent.videoLength;
-                    printf("------ struct video len = %d\n",dataLength);
+//                    printf("------ struct video len = %d\n",dataLength);
                     
-                    if([self recvDataSocketData:(char*)videoData dataLength:dataLength])
+                    if([self recvDataSocketData:(char*)buf dataLength:dataLength])
                     {
                         
                         // 接收到视频,
@@ -328,7 +332,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
                         //
                         if ([_delegate respondsToSelector:@selector(recvVideoData:andDataLength:)]) {
                             //
-                            [_delegate recvVideoData:(unsigned char *)videoData andDataLength:dataLength];
+                            [_delegate recvVideoData:(unsigned char *)buf andDataLength:dataLength];
                         }
                         
                     }
@@ -344,16 +348,20 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
 //                printf("------ audio sizeof(dataContent) = %d \n",(int)sizeof(dataContent));
                 if([self recvDataSocketData:(char*)&dataContent dataLength:sizeof(dataContent)])
                 {
-                    char audioData[1280];//音频数据Buffer
-                    memset(&audioData, 0, sizeof(audioData));
+//                    char audioData[1280];
+//                    memset(&audioData, 0, sizeof(audioData));
+                    
+                    //音频数据Buffer
+                    const size_t kRecvBufSize = 40000; // 1280
+                    char* dataBuf = (char*)malloc(kRecvBufSize * sizeof(char));
                     
                     int audioLength=dataContent.dataLength;
                     printf("---- audio audioLength = %d \n", audioLength);
-                    if([self recvDataSocketData:audioData dataLength:audioLength])
+                    if([self recvDataSocketData:dataBuf dataLength:audioLength])
                     {
                         //接收到音频以后的处理
                         if ([_delegate respondsToSelector:@selector(recvAudioData:andDataLength:)]) {
-                            [_delegate recvAudioData:(unsigned char *)audioData andDataLength:audioLength];
+                            [_delegate recvAudioData:(unsigned char *)dataBuf andDataLength:audioLength];
                         }
                         
                         
@@ -502,7 +510,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
     
     int recvLen=0;
     long nRet=0;
-    printf("------ aLength = %d -------\n", aLength);
+//    printf("------ aLength = %d -------\n", aLength);
     while(recvLen<aLength)
     {
         nRet=recv(m_dataSockfd,pBuf,aLength-recvLen,0);
@@ -516,7 +524,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
         recvLen+=nRet;
         pBuf+=nRet;
         
-        printf("接收了%d个字节,\n\n",recvLen);
+//        printf("接收了%d个字节,\n\n",recvLen);
 
     }
     
