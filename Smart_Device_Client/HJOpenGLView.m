@@ -108,10 +108,7 @@ const GLfloat kColorConversion601FullRange[] = {
     self = [super init];
     if (self) {
         
-//        [self setupGL];
-        
         _isFullScreen = NO;
-        
         
         self.contentScaleFactor = [[UIScreen mainScreen] scale];
         //        self.contentScaleFactor = [self.frame scale];
@@ -142,9 +139,6 @@ const GLfloat kColorConversion601FullRange[] = {
 
 - (void)setupGL
 {
-//    [self addNotification];
-    
-//    printf("---- self.view --- width = %.2f, height = %.2f\n", self.frame.size.width, self.frame.size.height);
 	[EAGLContext setCurrentContext:_context];
 	[self setupBuffers];
 	[self loadShaders];
@@ -250,18 +244,12 @@ const GLfloat kColorConversion601FullRange[] = {
 		
 		
 		/*
-		 Use the color attachment of the pixel buffer to determine the appropriate color conversion matrix.
          使用像素缓冲区的颜色附件来确定适当的颜色转换矩阵。
 		 */
 		CFTypeRef colorAttachments = CVBufferGetAttachment(pixelBuffer, kCVImageBufferYCbCrMatrixKey, NULL);
         _preferredConversion = kColorConversion601FullRange; //         YCbCr->RGB
-        
-        /*
-         CVOpenGLESTextureCacheCreateTextureFromImage will create GLES texture optimally from CVPixelBufferRef.
-         */
 		
 		/*
-         Create Y and UV textures from the pixel buffer. These textures will be drawn on the frame buffer Y-plane.
          从像素缓冲区创建y和UV纹理。这些纹理将被绘制在帧缓冲Y平面。
          */
 		glActiveTexture(GL_TEXTURE0);
@@ -313,34 +301,23 @@ const GLfloat kColorConversion601FullRange[] = {
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		
 		glBindFramebuffer(GL_FRAMEBUFFER, _frameBufferHandle);
-		
-		// Set the view port to the entire view.   设置视图端口的全视图。
-        /*
-            _backingWidth, _backingHeight 绘制缓冲区的屏幕分辨率
-                _backingWidth  = 750,
-                _backingHeight = 1334
-         */
-//        printf("******* 绘制缓冲区的屏幕分辨率: width = %d, height = %d\n", _backingWidth, _backingHeight);
+
 		glViewport(0, 0, _backingWidth, _backingHeight);
 	}
 	
 	glClearColor(0.1f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	
-	// Use shader program.  使用着色器
+	// 使用着色器
 	glUseProgram(self.program);
 	glUniformMatrix3fv(uniforms[UNIFORM_COLOR_CONVERSION_MATRIX], 1, GL_FALSE, _preferredConversion);
 	
 	// 设置四顶点相对于视频的方向和长宽比。
 	CGRect vertexSamplingRect = AVMakeRectWithAspectRatioInsideRect(CGSizeMake(_backingWidth, _backingHeight), self.layer.bounds);
-//    printf("*** vertexSamplingRect ****, width = %f, height = %f --\n", vertexSamplingRect.size.width,vertexSamplingRect.size.height);  //   * 2 = 屏幕分辨率
-    
     
 	// 计算标准化的四个坐标来绘制帧。
 	CGSize normalizedSamplingSize = CGSizeMake(0.0, 0.0);
 	CGSize cropScaleAmount = CGSizeMake(vertexSamplingRect.size.width/self.layer.bounds.size.width, vertexSamplingRect.size.height/self.layer.bounds.size.height);
-//    printf("***** cropScaleAmount *******, height = %f, height = %f --\n", cropScaleAmount.width, cropScaleAmount.height);
-//    printf("***** cropScaleAmount *******, height = %f, height = %f --\n", self.layer.bounds.size.width, self.layer.bounds.size.height);
     
 	// 规范四边形顶点。
 	if (cropScaleAmount.width > cropScaleAmount.height) {
@@ -351,23 +328,15 @@ const GLfloat kColorConversion601FullRange[] = {
 		normalizedSamplingSize.width = 1.0;
 		normalizedSamplingSize.height = cropScaleAmount.width/cropScaleAmount.height;
 	}
-//    printf("====== normalizedSamplingSize:  width = %.2f, height = %.2f\n", normalizedSamplingSize.width, normalizedSamplingSize.height);
-    // ====== normalizedSamplingSize:  width = 1.000000, height = 1.000000
 	/*
       四顶点数据定义了我们绘制像素缓冲区的二维平面区域。
      顶点数据分别用（-1，-1）和（1，1）作为左下角和右上角坐标，覆盖整个屏幕。
      */
-//	GLfloat quadVertexData [] = {
-//		-1 * normalizedSamplingSize.width, -1 * normalizedSamplingSize.height,
-//			 normalizedSamplingSize.width, -1 * normalizedSamplingSize.height,
-//		-1 * normalizedSamplingSize.width, normalizedSamplingSize.height,
-//			 normalizedSamplingSize.width, normalizedSamplingSize.height,
-//	};
     
     GLfloat quadVertexData [] = {
-        -1 * 1, -1 * 1,
-            1, -1 * 1,
-        -1 * 1, 1,
+        -1 , -1 ,
+            1, -1,
+        -1 , 1,
             1, 1,
     };
 	

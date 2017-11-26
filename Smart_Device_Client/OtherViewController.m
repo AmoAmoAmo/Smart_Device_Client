@@ -32,16 +32,47 @@
     
     
     UIButton *removeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    CGFloat btnW = 60;
-    CGFloat btnH = 30;
-    removeBtn.frame = CGRectMake(SCREENWIDTH - 20-btnW, 35, btnW, btnH);
-    [removeBtn setTitle:@"删除" forState:UIControlStateNormal];
-    [removeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    CGFloat btnW = 60;
+//    CGFloat btnH = 30;
+//    removeBtn.frame = CGRectMake(SCREENWIDTH - 10-btnW, 35, btnW, btnH);
+//    [removeBtn setTitle:@"删除" forState:UIControlStateNormal];
+//    [removeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    CGFloat btnWidth = 34;
+    removeBtn.frame = CGRectMake(SCREENWIDTH-btnWidth-20, 27, btnWidth, btnWidth);
+    [removeBtn setImage:[UIImage imageNamed:@"删除 (1)"] forState:UIControlStateNormal];
     [removeBtn addTarget:self action:@selector(clickRemoveBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:removeBtn];
 }
 
 -(void)clickRemoveBtn
+{
+    //显示提示框
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"提示"
+                                                                   message:@"确定删除该设备信息？"
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"删除"
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              //响应事件                                                              
+                                                              [self removePlistDeviceData];
+                                                              
+                                                              
+                                                          }];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * action) {
+                                                         }];
+    
+    [alert addAction:defaultAction];
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
+
+}
+
+
+-(void)removePlistDeviceData
 {
     // 从沙盒中删除
     //获取本地沙盒路径
@@ -61,7 +92,6 @@
     //
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
 @end
 
 

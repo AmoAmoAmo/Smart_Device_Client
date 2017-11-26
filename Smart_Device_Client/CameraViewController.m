@@ -38,6 +38,8 @@
 
 @property (nonatomic, assign)   int  speedLength;
 
+@property (nonatomic, strong) UIButton *deleteBtn;      // 删除设备按钮
+
 @property (nonatomic, strong) UIButton *fullBtn;        // 全屏按钮
 
 @property (nonatomic, strong) UIButton *audioBtn;       // 音频播放/暂停 按钮
@@ -49,6 +51,8 @@
 @property (nonatomic, strong) UIView *btnBarView;
 
 @property (nonatomic, strong) AACPlayer *aacPlayer;
+
+//@property (nonatomic,strong) UIAlertView *alertView;
 
 
 @end
@@ -78,7 +82,7 @@
     // HUD
     [self showHUD];
     
-    // 开一个线程去创建计时器，记得要在该子线程中 使用自线程的runloop，否则计时器跑不起来
+    // 开一个线程去创建计时器，记得要在该子线程中 使用子线程的runloop，否则计时器跑不起来
     [NSThread detachNewThreadSelector:@selector(creatTimer) toTarget:self withObject:nil];
     
     // playView
@@ -105,9 +109,39 @@
     [backBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(clickBackBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backBtn];
+    
+    [self.view addSubview:self.deleteBtn];
 }
 
 
+-(void)clickDeleteBtn
+{
+//    NSLog(@"delete........");
+    //显示提示框
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"提示"
+                                                                   message:@"确定删除该设备信息？"
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"删除"
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              //响应事件                                                              
+                                                              [self removePlistDeviceData];
+                                                              
+                                                              
+                                                          }];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * action) {
+                                                             //响应事件
+                                                         }];
+    
+    [alert addAction:defaultAction];
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
+    
+    
+}
 
 -(void)clickBackBtn
 {
@@ -149,7 +183,7 @@
     }else{
         // 非静音
         printf("-------- 播放 -----\n");
-//        [self.aacPlayer audioStart];
+        [self.aacPlayer audioStart];
     }
     
 }
@@ -168,7 +202,26 @@
 }
 
 
-
+-(void)removePlistDeviceData
+{
+    // 从沙盒中删除
+    //获取本地沙盒路径
+    NSArray *pathArr = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    //获取完整路径
+    NSString *documentsPath = [pathArr objectAtIndex:0];
+    NSString *path = [documentsPath stringByAppendingPathComponent:@"DevicesList.plist"];
+    //沙盒文件中的内容（arr）
+    //    NSArray *docArr = [NSArray arrayWithContentsOfFile:path];
+    NSMutableArray *arr = [NSMutableArray arrayWithContentsOfFile:path];
+    [arr removeObjectAtIndex:self.index];
+    [arr writeToFile:path atomically:YES];
+    
+    
+    //
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"updateHomeUI" object:nil];
+    //
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 -(void)showHUD
 {
@@ -215,7 +268,7 @@
     // 累加1秒内所有数据包的大小
     _speedLength += length;
 //    _speedLength = length;
-//    printf("----- recved len = %d \n", length);
+    printf("----- recved len = %d \n", length);
     
     // 解码
     [self.decoder startH264DecodeWithVideoData:(char *)videoData andLength:length andReturnDecodedData:^(CVPixelBufferRef pixelBuffer) {
@@ -326,6 +379,18 @@
     return _videoBtn;
 }
 
+
+-(UIButton *)deleteBtn
+{
+    if (!_deleteBtn) {
+        _deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        CGFloat btnWidth = 34;
+        _deleteBtn.frame = CGRectMake(SCREENWIDTH-btnWidth-20, 27, btnWidth, btnWidth);
+        [_deleteBtn setImage:[UIImage imageNamed:@"删除 (1)"] forState:UIControlStateNormal];
+        [_deleteBtn addTarget:self action:@selector(clickDeleteBtn) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _deleteBtn;
+}
 
 @end
 

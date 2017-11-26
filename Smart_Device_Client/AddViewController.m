@@ -103,7 +103,7 @@
 
 -(void)setupTextFieldData
 {
-    if ([self.searchedDataDic[@"key_type"] isEqualToString:@"0"]) { // 搜索到的只可能是“0”
+    if ([self.searchedDataDic[@"key_type"] isEqualToString:@"0"]) { // 搜索到的只可能是类型“0”
         self.typeTF.text = @"监控";
         self.idTF.text = self.searchedDataDic[@"key_id"];
         self.ipTF.text = self.searchedDataDic[@"key_ip"];
@@ -270,7 +270,7 @@
         //            [arr addObject:dic];
         NSUInteger index = arr.count;
         [arr insertObject:dic atIndex:index];
-        NSLog(@"-- arr.count = %ld ", (unsigned long)arr.count);
+        NSLog(@"-- 添加到plist文件后，arr.count = %ld ", (unsigned long)arr.count);
         [arr writeToFile:path atomically:YES];
         
         dispatch_async(dispatch_get_main_queue(), ^{

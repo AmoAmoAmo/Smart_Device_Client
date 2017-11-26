@@ -33,14 +33,9 @@
     }
     return self;
 }
-//- (void)dealloc
-//{
-//    [super dealloc];
-//}
 
 -(int)startUDPSearchWithBlock:(ReturnDataWithStopSearchBlock)block
 {
-    //
     self.returnDataBlock = block;
     self.recvSignal = true;
     
@@ -51,8 +46,6 @@
         perror("socket: error\n");
         return -1;
     }
-    
-    
     
     // ---- 2-1. 向服务端地址发送数据广播：---limited broadcast,广播地址是255.255.255.255, 需要做一个SetSockopt():
     int broadCast = 1;
@@ -88,15 +81,12 @@
         m_dataDic = [NSDictionary dictionary];
     }
     
-    
     // 搜索 先发一个广播包。向局域网端口广播 UDP, 手机发一个广播包 给嵌入式设备，设备才会去做响应
     [self sendSearchBroadCast];
     
     // 嵌入式设备收到广播 返回 IP地址 端口，设备信息
-//    while (self.recvSignal == true) {
-        usleep(1 * 1000); // //停留1毫秒
-        [self recvDataAndProcess];
-//    }
+    usleep(1 * 1000); // //停留1毫秒
+    [self recvDataAndProcess];
     
     //回调函数，自动更新到UI.
     self.returnDataBlock(m_dataDic);
@@ -119,9 +109,7 @@
     msgHeader.protocolHeader[2] = '_';
     msgHeader.protocolHeader[3] = 'S';
     msgHeader.controlMask = CONTROLLCODE_SEARCH_BROADCAST_REQUEST;
-    
-    
-    
+
     if ([self sendData:(char *)&msgHeader length:headLength]) {
         return true;
     }
@@ -158,17 +146,12 @@
     
     while(readLen<length)
     {
-//        struct sockaddr_in addrRemote;
-//        int nLen=sizeof(addrRemote);
-        
         nRet=recvfrom(m_sockfd,pBuf,length-readLen,0,(struct sockaddr*)&m_serveraddr,(socklen_t*)&addrlen);// 一直在搜索 阻塞，直到 接收到服务器的回复，即搜索到设备
         
         if(nRet==-1){
             perror("recvfrom error: \n");
             return false;
         }
-        
-        
         readLen+=nRet;
         pBuf+=nRet;
     }
@@ -197,9 +180,6 @@
                          idStr,         @"key_id",nil];
 //            NSLog(@"--- %@ ---- %@", m_dataDic[@"key_ip"],m_dataDic[@"key_port"]);
         }
-        
-        
-        
     }
 }
 

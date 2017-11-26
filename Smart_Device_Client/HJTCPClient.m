@@ -59,8 +59,6 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
     m_ipStr = dataDic[@"ip"];
     // 一般还会校验其他信息，此处省略 ...
     
-//    int ret = [self initTCPSocket];
-    
     // 与摄像头认证、心跳包等的步骤省略，在本例中不是重点，实际应用中根据各自的业务逻辑去实现
     // 假设校验、连接已成功...
 //    if (ret == 0) {
@@ -89,107 +87,24 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
     }
 }
 
-// command socket 暂时不初始化
--(int)initTCPSocket
-{
-    m_canRecvData = false;
-    m_canRecvCommand = false;
-    
-    // 1、创建一个socket，用函数socket()；
-    m_comdSockfd = -1;
-    m_comdSockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (m_comdSockfd < 0) {
-        perror("sockfd error:");
-        return -1;
-    }
-    
-    
-    
-    
-    // 4、设置要连接的对方的IP地址和端口等属性；
-    const char *ipString = [m_ipStr UTF8String]; // NSString 转化为 char *
-    struct sockaddr_in serveraddr = {0};
-    serveraddr.sin_family = AF_INET;                // ipv4
-    serveraddr.sin_port = htons(SERVER_PORT);       // 端口号 h(ost) to n(et),电脑转网络, s(hort)
-    serveraddr.sin_addr.s_addr = htons(INADDR_ANY); // IP地址
-    
-    if(inet_pton(AF_INET,ipString,&serveraddr.sin_addr.s_addr)<=0)// inet_pton：将“点分十进制” －> “二进制整数”
-    {
-        printf("inet_pton error!!!\n");
-        return -1;
-    }
-    
-    
-    
-    
-    // ---- 2. connet 连接服务器 -----
-    //connect 是阻塞的，要进行3次握手，速度很慢, 所以要把它设置成非阻塞的connect模式
-//    int flag = fcntl(m_comdSockfd, F_GETFD, 0);
-//    fcntl(m_comdSockfd, F_SETFL, flag|O_NONBLOCK);
-    
-    // 非阻塞模式下，connect马上就会返回
-    int connetRet = connect(m_comdSockfd, (struct sockaddr *)&serveraddr, sizeof(struct sockaddr));
-    printf("connetRet == %d\n", connetRet);
-    
-    // 设置回成原来的阻塞模式: 因为在阻塞模式下 编程比较好进行
-    int flags = fcntl(m_comdSockfd, F_GETFD, 0);
-    fcntl(m_comdSockfd, F_SETFL, flags &(~O_NONBLOCK));
-    
-    
-    
-    
-    // 设置套接字，如果套接字一直阻塞 如一直RCV 就阻塞了。此处设置了2秒后超时，就不会一直被阻塞在这里了
-    struct timeval timeout = {2.0};
-    int ret_1 = setsockopt(m_comdSockfd, SOL_SOCKET, SO_SNDTIMEO, (const char *)&timeout, sizeof(struct timeval));
-    if (ret_1 < 0)
-    {
-        printf("setsockopt 1 SND  error!\n");
-        return -1;
-    }
-    int ret_2 = setsockopt(m_comdSockfd, SOL_SOCKET, SO_RCVTIMEO, (const char *)&timeout, sizeof(struct timeval));
-    if (ret_2 < 0)
-    {
-        printf("setsockopt 2 RCV  error!\n");
-        return -1;
-    }
-    
-    return 0;
-}
 
 -(void)transmissionThread
 {
-//    // 发送传输请求
-//    if ([self sendVideoTransRequestCommand]) {
-//        printf("------ 视频传输请求命令 发送成功 ---------\n");
-//        // 传输请求响应
-//        if ([self recvVideoTransReply]) {
-//            printf("------- 视频传输 同意连接 连接成功  ---------\n");
-//            //初始化数据通道Socket
-//            ......
-//        }
-//    }
-
-    
     //初始化数据通道Socket
     int ret = [self initDataSocketConnection];
     
-    if (ret == 0) {
-        printf("------- 视频传输 同意连接 连接成功  ---------\n");
-        
+    if (ret == 0) {        
         // ====== 请求 音视频数据 传输 数据通道 ======
         [self sendDataTransRequest];
         
-        printf("------- 数据 准备就绪 ---------\n");
+        printf("------- 等待接收音视频数据 ---------\n");
         m_canRecvData = true;
         m_canRecvCommand = true;
         
         // 新开线程，在线程里一直在循环接收数据/命令，直到循环的开关(m_canRecvData)被关闭(-stopTCPConnect;)
         //一直接收数据（视频or音频）
         [NSThread detachNewThreadSelector:@selector(recvDataThread) toTarget:self withObject:nil];
-        //一直接收命令
-//        [NSThread detachNewThreadSelector:@selector(recvCommandThread) toTarget:self withObject:nil];
     }
-
 }
 
 
@@ -203,7 +118,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
         printf("socket error! \n");
         return -1;
     }
-    printf("--- socketfd = %d \n",m_dataSockfd);
+    printf("\n\n--- socketfd = %d \n",m_dataSockfd);
     
     // 设置要连接的对方的IP地址和端口等属性；
     const char *ipString = [m_ipStr UTF8String]; // NSString 转化为 char *
@@ -244,7 +159,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
         return -1;
     }
     
-    printf("Socket - 2 - 初始化结束.........\n\n\n");
+    printf("Socket -  - 初始化结束.........\n\n");
     
     return 0;
 }
@@ -252,7 +167,7 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
 
 - (BOOL)sendDataTransRequest
 {
-    printf("数据 请求传输 .......\n");
+    printf("....数据 请求传输开始 .......\n");
     
     HJ_VideoAndAudioDataRequest request;
     memset(&request, 0, sizeof(request));
@@ -314,15 +229,13 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
                 if([self recvDataSocketData:(char*)&dataContent dataLength:sizeof(dataContent)])
                 {
                     // ---- 来一份数据就向缓冲里追加一份 ----
-
-//                    char videoData[204800]={0};// 接收到的视频Buffer.
                     
                     const size_t kRecvBufSize = 204800;
                     char* buf = (char*)malloc(kRecvBufSize * sizeof(char));
                     
 
                     int dataLength = dataContent.videoLength;
-//                    printf("------ struct video len = %d\n",dataLength);
+                    printf("------ struct video len = %d\n",dataLength);
                     
                     if([self recvDataSocketData:(char*)buf dataLength:dataLength])
                     {
@@ -348,23 +261,18 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
 //                printf("------ audio sizeof(dataContent) = %d \n",(int)sizeof(dataContent));
                 if([self recvDataSocketData:(char*)&dataContent dataLength:sizeof(dataContent)])
                 {
-//                    char audioData[1280];
-//                    memset(&audioData, 0, sizeof(audioData));
-                    
                     //音频数据Buffer
                     const size_t kRecvBufSize = 40000; // 1280
                     char* dataBuf = (char*)malloc(kRecvBufSize * sizeof(char));
                     
                     int audioLength=dataContent.dataLength;
-                    printf("---- audio audioLength = %d \n", audioLength);
+//                    printf("---- audio audioLength = %d \n", audioLength);
                     if([self recvDataSocketData:dataBuf dataLength:audioLength])
                     {
                         //接收到音频以后的处理
                         if ([_delegate respondsToSelector:@selector(recvAudioData:andDataLength:)]) {
                             [_delegate recvAudioData:(unsigned char *)dataBuf andDataLength:audioLength];
                         }
-                        
-                        
                     }
                 }
             }
@@ -372,77 +280,8 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
     }
 }
 
-//一直接收命令
--(void)recvCommandThread
-{
-    while (m_canRecvCommand) {
-        
-    }
-}
-
 
 #pragma mark - ********* socket 读写 *********
-
-// sendSocketCommand
-- (BOOL)sendComdSocketData:(char*)pBuf dataLength: (int)aLength
-{
-    
-    signal(SIGPIPE, SIG_IGN);
-    
-    pthread_mutex_lock(&mutex_cSend);
-    
-    int sendLen=0;
-    long nRet=0;
-    
-    while(sendLen<aLength)
-    {
-        nRet=send(m_comdSockfd,pBuf,aLength-sendLen,0);
-        
-        if(-1==nRet || 0==nRet)
-        {
-            pthread_mutex_unlock(&mutex_cSend);
-            printf("cSocket send error\n");
-            return false;
-        }
-        
-        sendLen+=nRet;
-        pBuf+=nRet;
-        printf("cSocket send ok %d %ld\n",m_comdSockfd, nRet);
-    }
-    
-    
-    pthread_mutex_unlock(&mutex_cSend);
-    
-    return true;
-}
-
-- (BOOL)recvComdSocketData: (char*)pBuf dataLength: (int)aLength
-{
-    signal(SIGPIPE, SIG_IGN);
-    
-    pthread_mutex_lock(&mutex_cRecv);
-    
-    int recvLen=0;
-    long nRet=0;
-    
-    while(recvLen<aLength)
-    {
-        nRet=recv(m_comdSockfd,pBuf,aLength-recvLen,0);
-        
-        if(-1==nRet || 0==nRet)
-        {
-            pthread_mutex_unlock(&mutex_cRecv);
-            printf("cSocket recv error\n");
-            return false;
-        }
-        recvLen+=nRet;
-        pBuf+=nRet;
-    }
-    
-    pthread_mutex_unlock(&mutex_cRecv);
-    
-    return true;
-}
 
 // sendSocketData
 - (BOOL)sendDataSocketData:(char*)pBuf dataLength: (int)aLength
@@ -518,13 +357,13 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
         if(-1==nRet || 0==nRet)
         {
             pthread_mutex_unlock(&mutex_dRecv);
-            printf("DSocket recv error\n");
+            printf("DSocket recv error\n\n");
             return false;
         }
         recvLen+=nRet;
         pBuf+=nRet;
         
-//        printf("接收了%d个字节,\n\n",recvLen);
+        printf("接收了%d个字节,\n\n",recvLen);
 
     }
     

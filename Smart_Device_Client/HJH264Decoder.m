@@ -57,14 +57,6 @@
     // 同步 --》 顺序执行
     dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        // 得到的packetBuffer和packetSize
-//        printf("=============== 解码前 buffer ===============\n");
-//        for (int i = 0; i < packetSize; i++) {
-//            printf("%02x", packetBuffer[i]);
-//        }
-//        printf("\n");
-        //        printf("--- packetSize = %ld -----\n", packetSize);
-        
         // 替换头字节长度
         uint32_t nalSize = (uint32_t)(packetSize - 4);
         uint32_t *pNalSize = (uint32_t *)packetBuffer;
@@ -98,17 +90,12 @@
                 break;
         }
         
-//        NSLog(@"----- pixelBuffer = %@ -----", pixelBuffer);
-        
         if(pixelBuffer) {
-            
             // 把解码后的数据block传给viewController
             self.returnDataBlock(pixelBuffer);
             CVPixelBufferRelease(pixelBuffer);
             
         }
-//        NSLog(@"Read Nalu size %ld", packetSize);
-        
     });
 }
 
@@ -145,8 +132,6 @@
         } else {
             NSLog(@"IOS8VT: reset decoder session failed status = %d", (int)status);
         }
-        
-        
     }
 }
 

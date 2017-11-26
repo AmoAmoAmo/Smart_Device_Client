@@ -14,7 +14,6 @@
 
 #define PRINTERROR(LABEL)	printf("%s err %4.4s %d\n", LABEL, (char *)&err, err)
 
-// const int port = 30000;			// socket端口号
 const unsigned int kNumAQBufs = 3;			// audio queue buffers 数量
 const size_t kAQBufSize = 128 * 1024;		// buffer 的大小 单位是字节
 const size_t kAQMaxPacketDescs = 512;		// ASPD的最大数量
@@ -73,14 +72,6 @@ typedef struct MyData MyData;
     pthread_cond_init(&myData->cond, NULL);
     pthread_cond_init(&myData->done, NULL);
     
-//    // get connected
-//    int connection_socket = MyConnectSocket();
-//    if (connection_socket < 0) return 1;
-//    printf("connected\n");
-    
-    // allocate a buffer for reading data from a socket
-//    const size_t kRecvBufSize = 40000;
-//    char* buf = (char*)malloc(kRecvBufSize * sizeof(char));
     
     // 创建音频文件流分析器
     OSStatus err = AudioFileStreamOpen(myData,
@@ -215,7 +206,6 @@ void MyPacketsProc(void *							inClientData,
     
     // this is called by audio file stream when it finds packets of audio
     MyData* myData = (MyData*)inClientData;
-//    printf("got data.  bytes: %d  packets: %d\n", (unsigned int)inNumberBytes, (unsigned int)inNumberPackets);
     
     // the following code assumes we're streaming VBR data. for CBR data, you'd need another code branch here.
     
@@ -424,7 +414,7 @@ void MyAudioQueueIsRunningCallback(void*					inClientData,
 -(void)audioStart
 {
     canPlay = true;
-    StartQueueIfNeeded(myData);
+//    StartQueueIfNeeded(myData);
 }
 
 @end
