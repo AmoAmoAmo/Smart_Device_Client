@@ -2,7 +2,7 @@
 Smart_Device_Client
 ----
 # 演示图
-![演示图](http://photo.blog.sina.com.cn/showpic.html#blogid=a5b943a20102yibo&url=http://album.sina.com.cn/pic/0032acoOzy7fPj3SedSf4)
+![演示图](https://github.com/AmoAmoAmo/Smart_Device_Client/blob/master/client_3.gif?raw=true)
 
 
 ----
