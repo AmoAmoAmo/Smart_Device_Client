@@ -88,6 +88,10 @@
     DevCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     NSString *nameStr = [NSString stringWithFormat:@"%@",dic[@"name"]];
     cell.nameLabel.text = nameStr;
+    
+    if ([nameStr isEqualToString:@"监控_1"]) {
+        nameStr = @"监控";
+    }
     cell.imgView.image = [UIImage imageNamed:nameStr];
     
     return cell;

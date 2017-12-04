@@ -111,6 +111,10 @@
     [self.view addSubview:backBtn];
     
     [self.view addSubview:self.deleteBtn];
+    
+    // 通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showDevOffLineHUD) name:@"dev_off_line" object:nil];
+    
 }
 
 
@@ -233,6 +237,15 @@
         [MBProgressHUD hideHUD];
 
     });
+}
+-(void)showDevOffLineHUD
+{
+    // 显示设备已离线
+    [MBProgressHUD showError:@"设备已离线"];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [MBProgressHUD hideHUD];
+    });
+    
 }
 
 

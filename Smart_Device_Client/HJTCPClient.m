@@ -139,6 +139,11 @@ pthread_mutex_t  mutex_dSend=PTHREAD_MUTEX_INITIALIZER;
     int retConn=connect(m_dataSockfd, ( struct sockaddr*)&serveraddr, sizeof( struct sockaddr));
     if (retConn < 0) {
         perror("-- tcp - Socket -  - 连接失败");
+        // hud
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"dev_off_line" object:nil];
+//        });
+        
         return -1;
     }
     printf("Socket -  - Connect Result:%d\n",retConn);

@@ -233,10 +233,12 @@
 }
 
 
+// -------- 把数据写入沙盒 ---------
 -(void)writeDataToSandBoxWithData:(NSDictionary*)dic
 {
     // 根据设备唯一标识符来判断设备是否已被添加（这里用自定义的id来模拟UUID）
     NSString *idStr = dic[@"id"];
+//    NSLog(@"--idstr = %@",idStr);
     
     //获取本地沙盒路径
     NSArray *pathArr = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -246,6 +248,7 @@
     //沙盒文件中的内容（arr）
 //    NSArray *docArr = [NSArray arrayWithContentsOfFile:path];
     NSMutableArray *arr = [NSMutableArray arrayWithContentsOfFile:path];
+    
     
     BOOL signal = false;
     for (int i = 0; i < arr.count; i++) {
@@ -298,6 +301,11 @@
         nameStr = @"监控";
         ipStr = self.searchedDataDic[@"key_ip"];
         idStr = self.searchedDataDic[@"key_id"];
+        
+        // 判断设备是Mac还是iPhone
+        if ([idStr isEqualToString:@"12355"]) {// mac
+            nameStr = @"监控_1";
+        }
     }else{
         // 手动填写的数据
         nameStr = self.typeTF.text;
